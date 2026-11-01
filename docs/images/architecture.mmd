@@ -1,0 +1,31 @@
+---
+title: agent-memory architecture
+---
+flowchart LR
+  subgraph clients[Callers]
+    AG["AI agent<br/>MCP client"]
+    APP["Application<br/>REST client"]
+    LIB["Python app<br/>direct import"]
+  end
+  subgraph srv[agent-memory]
+    MCP["MCP shell"]
+    REST["REST shell"]
+    FAC["Memory facade<br/>access check, service, audit"]
+    SVC["Services<br/>memory, episodic, cache, decisions"]
+    GOV["Governance and<br/>rate limiting"]
+  end
+  subgraph prov[Providers]
+    EMB["Embeddings<br/>Voyage AI or Amazon Bedrock"]
+    LLM["LLM enrichment<br/>Bedrock, OpenAI, Anthropic"]
+  end
+  DB[("MongoDB Atlas<br/>memories, episodes, cache,<br/>decisions, audit log")]
+  AG --> MCP
+  APP --> REST
+  MCP --> FAC
+  REST --> FAC
+  LIB --> FAC
+  FAC --> GOV
+  FAC --> SVC
+  SVC --> EMB
+  SVC --> LLM
+  SVC --> DB
