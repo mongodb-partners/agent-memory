@@ -638,3 +638,7 @@ retention.
 ## License
 
 Apache 2.0. See [LICENSE](LICENSE).
+
+## Architecture
+
+![Architecture](docs/images/architecture.svg)
